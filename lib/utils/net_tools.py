@@ -1,7 +1,8 @@
+import importlib
 import os
+
 import dill
 import torch
-import importlib
 import torch.nn as nn
 from lib.core.config import cfg
 from lib.utils.logging import setup_logging
@@ -30,22 +31,22 @@ def get_func(func_name):
         raise
 
 
-def load_ckpt(args, model, optimizer=None, scheduler=None, val_err=[]):
+def load_ckpt(ckpt, model, optimizer=None, scheduler=None, val_err=[]):
     """
     Load checkpoint.
     """
-    if os.path.isfile(args.load_ckpt):
-        logger.info("loading checkpoint %s", args.load_ckpt)
-        checkpoint = torch.load(args.load_ckpt, map_location=lambda storage, loc: storage, pickle_module=dill)
+    if os.path.isfile(ckpt):
+        logger.info("loading checkpoint %s", ckpt)
+        checkpoint = torch.load(ckpt, map_location=lambda storage, loc: storage, pickle_module=dill)
         model.load_state_dict(checkpoint['model_state_dict'])
-        if args.resume:
-            args.batchsize = checkpoint['batch_size']
-            args.start_step = checkpoint['step']
-            args.start_epoch = checkpoint['epoch']
-            optimizer.load_state_dict(checkpoint['optimizer'])
-            scheduler.load_state_dict(checkpoint['scheduler'])
-            if 'val_err' in checkpoint:  # For backward compatibility
-                val_err[0] = checkpoint['val_err']
+        # if args.resume:
+        #     args.batchsize = checkpoint['batch_size']
+        #     args.start_step = checkpoint['step']
+        #     args.start_epoch = checkpoint['epoch']
+        #     optimizer.load_state_dict(checkpoint['optimizer'])
+        #     scheduler.load_state_dict(checkpoint['scheduler'])
+        #     if 'val_err' in checkpoint:  # For backward compatibility
+        #         val_err[0] = checkpoint['val_err']
         del checkpoint
         torch.cuda.empty_cache()
 
