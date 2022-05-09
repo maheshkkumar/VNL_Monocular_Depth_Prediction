@@ -1,12 +1,15 @@
+import math
+
 import torch
 import torch.nn as nn
-from lib.core.config import cfg
-import lib.models.ResNeXt as ResNeXt
-import lib.utils.resnext_weights_helper as resnext_utils
-import lib.utils.mobilenetv2_weight_helper as mobilenet_utils
-import lib.models.MobileNetV2 as MobileNetV2
 from torch.nn import functional as F
-import math
+
+import models.VNL.lib.models.MobileNetV2 as MobileNetV2
+import models.VNL.lib.models.ResNeXt as ResNeXt
+import models.VNL.lib.utils.mobilenetv2_weight_helper as mobilenet_utils
+import models.VNL.lib.utils.resnext_weights_helper as resnext_utils
+from models.VNL.lib.core.config import cfg
+
 
 def lateral_resnext50_32x4d_body_stride16():
     return lateral(ResNeXt.ResNeXt50_32x4d_body_stride16)

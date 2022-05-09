@@ -1,8 +1,10 @@
-import os
-import torch
-from lib.core.config import cfg
-import numpy as np
 import logging
+import os
+
+import numpy as np
+import torch
+from models.VNL.lib.core.config import cfg
+
 logger = logging.getLogger(__name__)
 
 

@@ -1,7 +1,8 @@
+import numpy as np
 import torch
 import torch.nn as nn
-import numpy as np
-from lib.core.config import cfg
+
+from models.VNL.lib.core.config import cfg
 
 
 class WCEL_Loss(nn.Module):

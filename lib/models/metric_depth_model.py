@@ -1,12 +1,15 @@
+import numpy as np
 import torch
 import torch.nn as nn
-import numpy as np
+
+from models.VNL.lib.core.config import cfg
+from models.VNL.lib.models.image_transfer import (bins_to_depth,
+                                                  kitti_merge_imgs)
+from models.VNL.lib.models.VNL_loss import VNL_Loss
+from models.VNL.lib.models.WCEL_loss import WCEL_Loss
+from models.VNL.lib.utils.net_tools import get_func
+
 from . import lateral_net as lateral_net
-from lib.utils.net_tools import get_func
-from lib.models.WCEL_loss import WCEL_Loss
-from lib.models.VNL_loss import VNL_Loss
-from lib.models.image_transfer import bins_to_depth, kitti_merge_imgs
-from lib.core.config import cfg
 
 
 class MetricDepthModel(nn.Module):

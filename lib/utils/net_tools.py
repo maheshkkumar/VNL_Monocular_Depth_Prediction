@@ -4,8 +4,8 @@ import os
 import dill
 import torch
 import torch.nn as nn
-from lib.core.config import cfg
-from lib.utils.logging import setup_logging
+from models.VNL.lib.core.config import cfg
+from models.VNL.lib.utils.logging import setup_logging
 
 logger = setup_logging(__name__)
 
@@ -23,7 +23,7 @@ def get_func(func_name):
         if len(parts) == 1:
             return globals()[parts[0]]
         # Otherwise, assume we're referencing a module under modeling
-        module_name = 'lib.models.' + '.'.join(parts[:-1])
+        module_name = 'models.VNL.lib.models.' + '.'.join(parts[:-1])
         module = importlib.import_module(module_name)
         return getattr(module, parts[-1])
     except Exception:

@@ -1,7 +1,9 @@
-import os
-import torch
-from lib.core.config import cfg
 import logging
+import os
+
+import torch
+from models.VNL.lib.core.config import cfg
+
 logger = logging.getLogger(__name__)
 
 def load_pretrained_imagenet_resnext_weights(model):

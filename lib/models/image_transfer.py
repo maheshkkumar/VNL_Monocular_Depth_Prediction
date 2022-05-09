@@ -2,8 +2,28 @@ import cv2
 import numpy as np
 import torch
 import torch.nn.functional as F
-from lib.core.config import cfg
+import yaml
 
+from models.VNL.lib.core.config import _merge_a_into_b, cfg
+from models.VNL.lib.utils.collections import AttrDict
+
+# merging the default config with network specific config
+with open('./models/VNL/lib/configs/resnext101_32x4d_nyudv2_class.yaml', 'r') as f:
+        yaml_cfg = AttrDict(yaml.full_load(f))
+_merge_a_into_b(yaml_cfg, cfg)
+
+cfg.DATASET.DEPTH_MIN_LOG = np.log10(cfg.DATASET.DEPTH_MIN)
+
+    # Modify some configs
+cfg.DATASET.DEPTH_BIN_INTERVAL = (np.log10(cfg.DATASET.DEPTH_MAX) - np.log10(
+    cfg.DATASET.DEPTH_MIN)) / cfg.MODEL.DECODER_OUTPUT_C
+
+# The boundary of each bin
+cfg.DATASET.DEPTH_BIN_BORDER = np.array(
+    [np.log10(cfg.DATASET.DEPTH_MIN) + cfg.DATASET.DEPTH_BIN_INTERVAL * (i + 0.5)
+        for i in range(cfg.MODEL.DECODER_OUTPUT_C)])
+cfg.DATASET.WCE_LOSS_WEIGHT = [[np.exp(-0.2 * (i - j) ** 2) for i in range(cfg.MODEL.DECODER_OUTPUT_C)]
+                                for j in np.arange(cfg.MODEL.DECODER_OUTPUT_C)]
 
 def bins_to_depth(depth_bin):
     """

@@ -1,10 +1,11 @@
 """Utilities for logging."""
 
-from collections import deque
 import logging
-import numpy as np
 import sys
-from lib.core.config import cfg
+from collections import deque
+
+import numpy as np
+from models.VNL.lib.core.config import cfg
 
 
 def log_stats(stats, args):

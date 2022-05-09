@@ -1,16 +1,15 @@
-from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-from __future__ import unicode_literals
+from __future__ import (absolute_import, division, print_function,
+                        unicode_literals)
 
+import copy
 import os
+from ast import literal_eval
+
+import numpy as np
 import six
 import yaml
-import copy
-import numpy as np
-from lib.utils.collections import AttrDict
-from lib.utils.misc import get_run_name
-from ast import literal_eval
+from models.VNL.lib.utils.collections import AttrDict
+from models.VNL.lib.utils.misc import get_run_name
 
 __C = AttrDict()
 # Consumers can get config by:
@@ -51,7 +50,8 @@ __C.DATASET.FOCAL_Y = 1.0
 __C.MODEL = AttrDict()
 __C.MODEL.INIT_TYPE = 'xavier'
 # Configure the model type for the encoder, e.g.ResNeXt50_32x4d_body_stride16
-__C.MODEL.ENCODER = 'resnext50_body_32x4d'
+# __C.MODEL.ENCODER = 'resnext50_32x4d_body_stride16'
+__C.MODEL.ENCODER = 'resnext101_32x4d_body_stride16'
 __C.MODEL.MODEL_REPOSITORY = 'datasets/pretrained_model'
 __C.MODEL.PRETRAINED_WEIGHTS = 'resnext50_32x4d.pth'
 __C.MODEL.LOAD_IMAGENET_PRETRAINED_WEIGHTS = False
